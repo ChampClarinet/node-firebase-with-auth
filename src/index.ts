@@ -44,6 +44,8 @@ app.get('/get/:filename', async (req, res) => {
     const filename = req.params['filename'];
     const file = bucket.file(filename);
     try {
+        const isExists = await file.exists();
+        if (isExists.some(value => !value)) return res.status(404).json({ status: 'error', message: 'file not exists' });
         const [url] = await file.getSignedUrl({
             action: 'read',
             expires: +(new Date()) + Config.DOWNLOAD_URL_LIFETIME,
