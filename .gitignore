@@ -1,0 +1,5 @@
+dist
+node_modules
+*/.env
+key.json
+src/firebase.config*
